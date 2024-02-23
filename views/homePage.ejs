@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple To-Do App</title>
+    <style>
+      *{
+        background-color: antiquewhite;
+      }
+      span {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Don't have an account?
+      <span onclick="javascript:window.location.href='/register'"
+        >Register</span
+      >
+    </p>
+
+    <p>
+      Already have an account?
+      <span onclick="javascript:window.location.href='/login'">Login</span>
+    </p>
+  </body>
+</html>
