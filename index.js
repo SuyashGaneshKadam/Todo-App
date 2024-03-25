@@ -268,7 +268,7 @@ app.get("/read-item", isAuth, async (req, res) => {
   }
 });
 
-app.post("/edit-item", isAuth, rateLimiting, async (req, res) => {
+app.post("/edit-item", isAuth, async (req, res) => {
   const { id, newData } = req.body;
   const username = req.session.user.username;
   try {
@@ -297,7 +297,7 @@ app.post("/edit-item", isAuth, rateLimiting, async (req, res) => {
   }
 });
 
-app.post("/delete-item", isAuth, rateLimiting, async (req, res) => {
+app.post("/delete-item", isAuth, async (req, res) => {
   const { id } = req.body;
   const username = req.session.user.username;
   // console.log("id:", id);
