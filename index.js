@@ -182,8 +182,8 @@ app.post("/create-item", isAuth, rateLimiting, async (req, res) => {
     return res.status(400).json("Todo text is missing");
   } else if (typeof todo !== "string") {
     return res.status(400).json("Todo is not a text");
-  } else if (todo.length < 3 || todo.length > 100) {
-    return res.status(400).json("Todo length should be 3-100");
+  } else if (todo.length < 3 || todo.length > 500) {
+    return res.status(400).json("Todo length should be 3-500");
   }
 
   // Creating todo object
