@@ -207,65 +207,67 @@ app.post("/create-item", isAuth, rateLimiting, async (req, res) => {
 
 app.get("/read-item", isAuth, async (req, res) => {
   // Code before using Pagination
-  // const username = req.session.user.username;
-  // try {
-  //   const todos = await todoModel.find({ username });
-  //   // console.log(todos);
-  //   if (todos.length === 0) {
-  //     return res.send({
-  //       status: 400,
-  //       message: "No Todos found",
-  //     });
-  //   }
-  //   return res.send({
-  //     status: 200,
-  //     message: "Data fetched successfully",
-  //     data: todos,
-  //   });
-  // } catch (error) {
-  //   return res.send({ status: 500, message: "Database error", error });
-  // }
-  // --------------------------------------------------------------------------------
-  // Code after using Pagination
   const username = req.session.user.username;
-  const SKIP = Number(req.query.skip) || 0;
-  const LIMIT = 3;
-
-  // MongoDB aggregate, skip, limit, match
   try {
-    const todos = await todoModel.aggregate([
-      {
-        $match: { username: username },
-      },
-      {
-        $facet: {
-          data: [
-            {
-              $skip: SKIP,
-            },
-            {
-              $limit: LIMIT,
-            },
-          ],
-        },
-      },
-    ]);
+    const todos = await todoModel.find({ username });
     // console.log(todos);
-    if (todos[0].data.length === 0) {
+    if (todos.length === 0) {
       return res.send({
-        status: 404,
-        message: SKIP === 0 ? "No todos found" : "No more todos",
-        data: todos[0].data,
+        status: 400,
+        message: "No Todos found",
       });
     }
     return res.send({
       status: 200,
       message: "Data fetched successfully",
-      data: todos[0].data,
+      data: todos,
     });
   } catch (error) {
     return res.send({ status: 500, message: "Database error", error });
   }
+
+  // --------------------------------------------------------------------------------
+  
+  // Code after using Pagination
+  // const username = req.session.user.username;
+  // const SKIP = Number(req.query.skip) || 0;
+  // const LIMIT = 3;
+
+  // // MongoDB aggregate, skip, limit, match
+  // try {
+  //   const todos = await todoModel.aggregate([
+  //     {
+  //       $match: { username: username },
+  //     },
+  //     {
+  //       $facet: {
+  //         data: [
+  //           {
+  //             $skip: SKIP,
+  //           },
+  //           {
+  //             $limit: LIMIT,
+  //           },
+  //         ],
+  //       },
+  //     },
+  //   ]);
+  //   // console.log(todos);
+  //   if (todos[0].data.length === 0) {
+  //     return res.send({
+  //       status: 404,
+  //       message: SKIP === 0 ? "No todos found" : "No more todos",
+  //       data: todos[0].data,
+  //     });
+  //   }
+  //   return res.send({
+  //     status: 200,
+  //     message: "Data fetched successfully",
+  //     data: todos[0].data,
+  //   });
+  // } catch (error) {
+  //   return res.send({ status: 500, message: "Database error", error });
+  // }
 });
 
 app.post("/edit-item", isAuth, async (req, res) => {
