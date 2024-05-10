@@ -173,7 +173,8 @@ app.post("/logout_from_all_devices", isAuth, async (req, res) => {
   }
 });
 
-app.post("/create-item", isAuth, rateLimiting, async (req, res) => {
+// app.post("/create-item", isAuth, rateLimiting, async (req, res) => {
+app.post("/create-item", isAuth, async (req, res) => {
   const { todo } = req.body;
   const username = req.session.user.username;
 
@@ -182,9 +183,10 @@ app.post("/create-item", isAuth, rateLimiting, async (req, res) => {
     return res.status(400).json("Todo text is missing");
   } else if (typeof todo !== "string") {
     return res.status(400).json("Todo is not a text");
-  } else if (todo.length < 3 || todo.length > 500) {
-    return res.status(400).json("Todo length should be 3-500");
   }
+  //else if (todo.length < 3 || todo.length > 500) {
+  //   return res.status(400).json("Todo length should be 3-500");
+  // }
 
   // Creating todo object
   const todoObj = new todoModel({
@@ -227,7 +229,7 @@ app.get("/read-item", isAuth, async (req, res) => {
   }
 
   // --------------------------------------------------------------------------------
-  
+
   // Code after using Pagination
   // const username = req.session.user.username;
   // const SKIP = Number(req.query.skip) || 0;
