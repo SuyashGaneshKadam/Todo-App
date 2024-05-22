@@ -10,12 +10,18 @@
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
       crossorigin="anonymous"
     />
+    <style>
+      *{
+        background-color: black !important;
+        color: white !important;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
-      <h1 class="display-4 text-center py-1">To-Do App</h1>
+      <!-- <h1 class="display-4 text-center py-1">To-Do App</h1> -->
 
-      <div class="jumbotron p-3 shadow-sm">
+      <div class="jumbotron p-3 shadow-sm" style="margin-top: 2rem;">
         <div class="d-flex align-items-center">
           <input
             id="create_field"
@@ -26,7 +32,7 @@
             type="text"
             style="flex: 1"
           />
-          <button class="add_item btn btn-primary">Add New Item</button>
+          <button class="add_item btn btn-secondary">Add New Item</button>
         </div>
       </div>
 

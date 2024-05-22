@@ -20,7 +20,7 @@ function generateTodos() {
         <span class="item-text"> ${item.todo}</span>
         <div>
         <button data-id="${item._id}" class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
-        <button data-id="${item._id}" class="delete-me btn btn-danger btn-sm">Delete</button>
+        <button data-id="${item._id}" class="delete-me btn btn-secondary btn-sm">Delete</button>
         </div></li>`;
           })
           .join("")
