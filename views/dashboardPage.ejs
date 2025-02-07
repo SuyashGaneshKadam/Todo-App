@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     />
     <style>
-      *{
+      * {
         background-color: black !important;
         color: white !important;
       }
@@ -30,17 +30,15 @@
             autocomplete="off"
             class="form-control mr-3"
             type="text"
+            placeholder="Enter a todo..."
             style="flex: 1"
           />
+          <input id="image_input" type="file" accept="image/*" class="mr-3" />
           <button class="add_item btn btn-secondary">Add New Item</button>
         </div>
       </div>
 
       <ul id="item_list" class="list-group pb-5"></ul>
-
-      <!-- <button class="show_more">Show More</button>
-      <br />
-      <br /> -->
 
       <form action="/logout" method="POST">
         <button>Logout</button>
@@ -50,6 +48,7 @@
         <button>Logout from all devices</button>
       </form>
     </div>
+    
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
     <script src="/browser.js"></script>
   </body>

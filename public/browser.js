@@ -17,11 +17,19 @@ function generateTodos() {
         todos
           .map((item) => {
             return `<li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-        <span class="item-text"> ${item.todo}</span>
-        <div>
-        <button data-id="${item._id}" class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
-        <button data-id="${item._id}" class="delete-me btn btn-secondary btn-sm">Delete</button>
-        </div></li>`;
+              <div>
+                <span class="item-text"> ${item.todo}</span>
+                ${
+                  item.hasImage
+                    ? `<br><a href="${item.imageUrl}" download class="download-btn btn btn-sm btn-success mt-2">Download</a>`
+                    : ""
+                }
+              </div>
+              <div>
+                <button data-id="${item._id}" class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
+                <button data-id="${item._id}" class="delete-me btn btn-danger btn-sm">Delete</button>
+              </div>
+            </li>`;
           })
           .join("")
       );
@@ -66,9 +74,7 @@ document.addEventListener("click", function (event) {
           alert(res.data.message);
           return;
         }
-        // console.log(res);
         event.target.parentElement.parentElement.remove();
-        return;
       })
       .catch((err) => {
         console.log(err);
@@ -77,23 +83,34 @@ document.addEventListener("click", function (event) {
   // Add
   else if (event.target.classList.contains("add_item")) {
     const todo = document.getElementById("create_field").value;
+    const imageFile = document.getElementById("image_input").files[0];
+
+    const formData = new FormData();
+    if (todo) formData.append("todo", todo);
+    if (imageFile) formData.append("image", imageFile);
+
     axios
-      .post("/create-item", { todo })
+      .post("/create-item", formData, { headers: { "Content-Type": "multipart/form-data" } })
       .then((res) => {
         if (res.data.status === 400) {
           alert(res.data.message);
           return;
         }
+
         document.getElementById("create_field").value = "";
-        // console.log(res);
+        document.getElementById("image_input").value = "";
+
         document.getElementById("item_list").insertAdjacentHTML(
           "beforeend",
           `<li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-                <span class="item-text"> ${res.data.data.todo}</span>
-                <div>
-                <button data-id="${res.data.data._id}" class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
-                <button data-id="${res.data.data._id}" class="delete-me btn btn-danger btn-sm">Delete</button>
-                </div></li>`
+            <div>
+              <span class="item-text"> ${res.data.data.todo}</span>
+            </div>
+            <div>
+              <button data-id="${res.data.data._id}" class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
+              <button data-id="${res.data.data._id}" class="delete-me btn btn-danger btn-sm">Delete</button>
+            </div>
+          </li>`
         );
       })
       .catch((err) => {
